@@ -33,7 +33,7 @@ on:
 jobs:
   build:
     name: Build and Test ${{ matrix.channel }}
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04-arm
     timeout-minutes: 120
     # Make warnings errors, this is to prevent warnings slipping through.
     # This is done globally to prevent rebuilds when the RUSTFLAGS env variable changes.
@@ -179,7 +179,10 @@ jobs:
         run: |
           cargo fmt --all -- --check
       # End Run cargo fmt
-
+      - name: "create release"
+        id: releasing
+        run: |
+          cargo build  --features sqlite,mysql,postgresql --release
 
       # Check for any previous failures, if there are stop, else continue.
       # This is useful so all test/clippy/fmt actions are done, and they can all be addressed
