@@ -179,10 +179,7 @@ jobs:
         run: |
           cargo fmt --all -- --check
       # End Run cargo fmt
-      - name: "create release"
-        id: releasing
-        run: |
-          cargo build  --features sqlite,mysql,postgresql --release
+      
 
       # Check for any previous failures, if there are stop, else continue.
       # This is useful so all test/clippy/fmt actions are done, and they can all be addressed
@@ -223,3 +220,7 @@ jobs:
         run: |
           echo "### :tada: Checks Passed!" >> "${GITHUB_STEP_SUMMARY}"
           echo "" >> "${GITHUB_STEP_SUMMARY}"
+      - name: "create release"
+        id: releasing
+        run: |
+          cargo build  --features sqlite,mysql,postgresql --release
